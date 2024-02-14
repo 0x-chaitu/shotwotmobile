@@ -5,48 +5,34 @@ import { Input, IInputProps, FormControl, WarningOutlineIcon } from "native-base
 
 export interface InputFieldProps extends IInputProps {
     label?: string;
-    mainContainerStyle?: ViewProps['style'];
-    errorMessage?: string;
-    cardStyle: any,
-    required: boolean,
+    isInvalid?: boolean;
+    error?: string;
 }
 
 export default function InputField({
-    cardStyle = {},
-    required,
-    mainContainerStyle = {},
     label,
-    errorMessage = '',
+    isInvalid = false,
+    error = "error",
     ...props
 }: InputFieldProps) {
     return (
-        <FormControl isInvalid={false} >
+        <FormControl isInvalid={isInvalid} >
             <FormControl.Label margin={0}><Text
-                style={{
-                    fontFamily: 'Poppins-Medium',
-                    color: colors.palette.black,
-                    fontWeight: "600",
-                    fontSize: 16,
-                }}
+                style={styles.label}
             >{label}</Text></FormControl.Label>
             <Input
                 margin={0}
-                fontSize={18}
+                fontSize={16}
                 backgroundColor={'white'}
                 placeholderTextColor={colors.palette.gray500}
                 borderColor={colors.palette.grey100}
                 fontFamily={'Poppins-Regular'}
-                _focus={{
-                    fontFamily: 'Poppins-Regular',
-                    color: colors.palette.black,
-                    borderColor: colors.palette.grey100,
-                    margin: 0,
-                }}
+                _focus={styles.focus}
                 keyboardType='visible-password'
                 {...props}
             />
             <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                Email is required
+                {error}
             </FormControl.ErrorMessage>
         </FormControl>
 
@@ -57,32 +43,16 @@ const styles = StyleSheet.create({
     container: {
         margin: 0
     },
-    inputContainer: {
-        borderColor: colors.palette.transparent,
-
-
-    },
-    cardContainer: {
-
-    },
-    errorContainer: {
-        borderColor: 'red',
-    },
-    inputStyle: {
-        fontFamily: "Poppins-Regular",
+    focus: {
+        fontFamily: 'Poppins-Regular',
         color: colors.palette.black,
-        fontSize: 16,
+        borderColor: colors.palette.grey100,
+        margin: 0,
     },
-    mainViewContainer: {
-        flexDirection: 'column',
-    },
-    errorMessage: {
-        color: 'red',
-    },
-    labelAndErrorContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 2,
-    },
+    label: {
+        fontFamily: 'Poppins-Medium',
+        color: colors.palette.black,
+        fontWeight: "600",
+        fontSize: 18,
+    }
 });
