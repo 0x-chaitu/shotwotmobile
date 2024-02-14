@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "873491061375",
+    "project_id": "shotwot-test",
+    "storage_bucket": "shotwot-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873491061375:android:a11db1287a6ee6a02c3d4a",
+        "android_client_info": {
+          "package_name": "com.shotwot.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "873491061375-vpbe0noans83tuta1lsqpc9bf8a9pbap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shotwot.app",
+            "certificate_hash": "ae8f855ff011c1a54a76c2957ee08bb1352859f4"
+          }
+        },
+        {
+          "client_id": "873491061375-s05f3ec09t5khm86feu6fcdnn7btqpp9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA51sKYKr5pBhh_PVlVwGgE2vJieTHd8E4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "873491061375-s05f3ec09t5khm86feu6fcdnn7btqpp9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
