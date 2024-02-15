@@ -35,11 +35,15 @@ export default function RHFInputField({ name, label, error, rules, ...other }: P
                         borderColor={colors.palette.grey100}
                         fontFamily={'Poppins-Regular'}
                         _focus={styles.focus}
-                        keyboardType='visible-password'
                         onChangeText={field.onChange}
                         defaultValue=''
+
                         {...other}
                         {...field}
+                        // @ts-ignore
+                        _pressed={{
+                            opacity: 80
+                        }}
                     />
                     )
                 }}

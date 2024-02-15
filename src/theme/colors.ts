@@ -9,6 +9,9 @@ const palette = {
     primaryBlue: '#3C77F1',
     blue50: '#F0F0FC',
 
+    primaryBlue700: "#4748A2",
+    lightBlue700: "#0088B2",
+
 
     transparent: 'transparent'
 

@@ -9,6 +9,11 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import RHFInputField from '../forms/RHFInputField';
 import FormProvider from '../forms/FormProvider';
+import auth from '@react-native-firebase/auth';
+import { LOCAL_STORAGE_KEYS, setItemInAsyncStorage } from '../hooks/useStorage';
+import { dispatch } from '../store';
+import { loginAPI } from '../services/Auth';
+import { handleUserLogin } from '../store/slice/userSlice';
 
 interface LoginProps { }
 
@@ -19,7 +24,8 @@ const signUpSchema = Yup.object().shape({
 });
 
 const Login = (props: LoginProps) => {
-
+    const [_loading, setLoading] = useState(false)
+    const [show, setShow] = useState(false)
 
     const methods = useForm({
         resolver: yupResolver(signUpSchema) as any,
@@ -28,15 +34,41 @@ const Login = (props: LoginProps) => {
     });
 
     const { handleSubmit, setValue, watch, formState: { errors } } = methods;
-    const onSubmit = (data: any) => {
-        console.log('submiting with ', data);
-    };
-
-    const signIn = async () => {
+    const onSubmit = async (data: any) => {
+        setLoading(true)
         try {
+            const user = await auth().signInWithEmailAndPassword(data?.email, data?.password)
+            try {
+                const idToken = await user?.user.getIdToken()
+                try {
+                    const data: any = await loginAPI(idToken);
+                    console.log(data);
+
+                    if (data?.data != undefined) {
+                        setItemInAsyncStorage(
+                            LOCAL_STORAGE_KEYS.accessToken,
+                            data?.data?.accesstoken,
+                        );
+                        setItemInAsyncStorage(
+                            LOCAL_STORAGE_KEYS.refreshToken,
+                            data?.data?.refreshtoken,
+                        );
+                        setItemInAsyncStorage(LOCAL_STORAGE_KEYS.userId, data?.data?.user);
+                        dispatch(handleUserLogin(data?.data?.user));
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            } catch (error) {
+                console.log(error);
+            }
         } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false)
         }
     };
+
 
     return (
         <ScreenContainer>
@@ -48,6 +80,7 @@ const Login = (props: LoginProps) => {
                     maxLength={128}
                     variant={'outline'}
                     name='email'
+                    keyboardType='visible-password'
                     // @ts-ignore
                     error={errors.email}
                 />
@@ -57,13 +90,20 @@ const Login = (props: LoginProps) => {
                     maxLength={128}
                     variant={'outline'}
                     name='password'
+                    // type="password"
+                    secureTextEntry={true}
                     // @ts-ignore
                     error={errors.password}
                 />
                 <CustomButton
+                    onPress={handleSubmit(onSubmit)}
+                    isLoading={_loading}
+                    isDisabled={_loading}
                     placeholder='Log In'
                     marginTop={0}
-                    onPress={handleSubmit(onSubmit)}
+                    _pressed={{
+                        opacity: 80
+                    }}
                 />
             </FormProvider>
         </ScreenContainer>

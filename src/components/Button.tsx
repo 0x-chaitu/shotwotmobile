@@ -15,9 +15,9 @@ const CustomButton = ({ placeholder, ...props }: ButtonProps) => {
                 fontFamily: 'Poppins-Medium',
                 fontSize: 16
             }}
-            backgroundColor={colors.palette.primaryBlue}
+            backgroundColor={colors.palette.primaryBlue700}
             _loading={{
-                bg: colors.palette.primaryBlue,
+                bg: colors.palette.primaryBlue700,
                 _text: {
                     color: "white",
                     fontFamily: 'Poppins-Medium',
@@ -26,7 +26,7 @@ const CustomButton = ({ placeholder, ...props }: ButtonProps) => {
             }}
             _spinner={{
                 color: "white"
-            }} isLoadingText="Submitting"
+            }} isLoadingText="Loading"
             {...props}
         >
             {placeholder}

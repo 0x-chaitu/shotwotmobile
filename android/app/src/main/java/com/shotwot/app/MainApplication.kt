@@ -1,4 +1,4 @@
-package com.shotwotmobile
+package com.shotwot.app
 
 import android.app.Application
 import com.facebook.react.PackageList

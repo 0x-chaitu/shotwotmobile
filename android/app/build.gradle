@@ -75,9 +75,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.shotwotmobile"
+    namespace "com.shotwot.app"
     defaultConfig {
-        applicationId "com.shotwotmobile"
+        applicationId "com.shotwot.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
