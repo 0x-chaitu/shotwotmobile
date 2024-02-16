@@ -1,19 +1,14 @@
 import React from 'react';
 import { Platform, StyleSheet, Text, View, ViewProps } from 'react-native';
 import { colors } from '../theme/colors';
-import { Input, IInputProps, FormControl, WarningOutlineIcon } from "native-base";
+import { TextArea, ITextAreaProps, FormControl, WarningOutlineIcon } from "native-base";
 
-export interface InputFieldProps extends IInputProps {
-}
-
-export default function InputField({
+export default function TextAreaField({
     placeholder,
-    width = "container",
     ...props
-}: InputFieldProps) {
+}: ITextAreaProps) {
     return (
-        <FormControl width={width}>
-
+        <FormControl >
             <FormControl.Label style={{
                 marginBottom: -10,
                 marginLeft: 10,
@@ -21,15 +16,15 @@ export default function InputField({
                 backgroundColor: colors.palette.white,
                 alignSelf: 'flex-start'
             }}>{placeholder}</FormControl.Label>
-            <Input
+            <TextArea
                 fontSize={16}
                 backgroundColor={'white'}
                 placeholderTextColor={colors.palette.gray500}
                 borderColor={colors.palette.grey100}
                 fontFamily={'Poppins-Regular'}
                 _focus={styles.focus}
-                defaultValue=''
                 placeholder={placeholder}
+                defaultValue=''
                 // @ts-ignore
                 _pressed={{
                     opacity: 80

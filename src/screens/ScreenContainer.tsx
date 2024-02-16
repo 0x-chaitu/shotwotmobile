@@ -13,14 +13,14 @@ export default function ScreenContainer({
     style = {},
 }: ScreenContainerProps) {
     return <View style={[styles.screenWrapper, style]}>
-        <StatusBar backgroundColor={colors.palette.blue50} />
+        <StatusBar backgroundColor={colors.palette.white} />
         {children}</View>;
 }
 
 const styles = StyleSheet.create({
     screenWrapper: {
         flex: 1,
-        backgroundColor: colors.palette.blue50,
+        backgroundColor: colors.palette.white,
         padding: 20,
         justifyContent: 'flex-start',
     },

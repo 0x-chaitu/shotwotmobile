@@ -1,13 +1,12 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { NavigationContainer, createNavigationContainerRef } from "@react-navigation/native";
+import { NavigationContainer, createNavigationContainerRef, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
-import Login from "./src/screens/Login";
 import { colors } from "./src/theme/colors";
-import { NativeBaseProvider } from "native-base";
+import { NativeBaseProvider, StatusBar } from "native-base";
 import {
   LOCAL_STORAGE_KEYS,
   getItemFromAsyncStorage,
@@ -17,9 +16,17 @@ import { useEffect } from "react";
 import { dispatch, store, useSelector } from "./src/store";
 import { getUserAPI } from "./src/services/Auth";
 import { handleUserLogin, resetState } from "./src/store/slice/userSlice";
+import AuthNavigator from "./src/navigators/AuthNavigator";
+import ScreensNavigator from "./src/navigators/ScreenNavigator";
 
 export const navigationRef = createNavigationContainerRef();
 const Stack = createNativeStackNavigator();
+
+export function customNavigation(name: string, params?: object) {
+  if (navigationRef.isReady()) {
+    (navigationRef.navigate as any)(name, params);
+  }
+}
 
 
 function CustomNavigation() {
@@ -34,7 +41,10 @@ function CustomNavigation() {
         try {
           if (localUser) {
             const res = await getUserAPI(localUser?.id)
-            dispatch(handleUserLogin(res?.data?.user));
+            if (res?.data) {
+              console.log(res?.data);
+              dispatch(handleUserLogin(res?.data));
+            }
           }
         } catch (error) {
 
@@ -63,39 +73,28 @@ function CustomNavigation() {
   // }, [userLoading]);
 
   if (!isUserLoggedIn) {
-    return <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <Stack.Screen name="Login" component={Login} />
-    </Stack.Navigator>;
+    return <AuthNavigator />
+  } else {
+    return <ScreensNavigator />
   }
-  if (user) {
-    // return <Stack.Navigator
-    //   screenOptions={{
-    //     headerShown: false,
-    //   }}>
-    // </Stack.Navigator>;
-  }
-  return null;
 }
 
 function App(): JSX.Element {
   return (
     <SafeAreaProvider>
+      <StatusBar backgroundColor={colors.palette.white} />
       <SafeAreaView edges={['top']} style={styles.safeAreaContainer}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <BottomSheetModalProvider>
             <NativeBaseProvider>
               <Provider store={store}>
                 <NavigationContainer
-                  // theme={{
-                  //   ...DefaultTheme,
-                  //   colors: {
-                  //     ...DefaultTheme.colors,
-                  //     background: themeColor.tint,
-                  //   },
-                  // }}
+                  theme={{
+                    ...DefaultTheme,
+                    colors: {
+                      ...DefaultTheme.colors,
+                    },
+                  }}
                   ref={navigationRef}>
 
                   <CustomNavigation />

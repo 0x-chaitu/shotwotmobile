@@ -3,7 +3,7 @@ import fetchHandler from './FetchHandler';
 export const getUserAPI = (id: string) => {
     return fetchHandler({
         method: 'get',
-        url: `api/v1/users/${id}`,
+        url: `users/${id}`,
     });
 };
 
