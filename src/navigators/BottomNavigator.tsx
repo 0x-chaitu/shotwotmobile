@@ -12,8 +12,8 @@ import BriefScreen from '../screens/BriefScreen';
 const Tab = createBottomTabNavigator();
 
 const bottomTabs = [
-  {name: 'Brief', component: BriefScreen, icon: BriefIcon},
   {name: 'Home', component: HomeScreen, icon: HomeIcon},
+  {name: 'Brief', component: BriefScreen, icon: BriefIcon},
   {name: 'Menu', component: MenuScreen, icon: MenuIcon},
 ];
 

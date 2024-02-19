@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useRef} from 'react';
 import {
   Text,
   View,
@@ -15,6 +15,7 @@ import Swiper from 'react-native-deck-swiper';
 interface BriefScreenProps {}
 
 const BriefScreen = (props: BriefScreenProps) => {
+  const swiperRef = useRef(null);
   return (
     <ScreenContainer style={{paddingTop: 10}}>
       <View
@@ -86,6 +87,7 @@ const BriefScreen = (props: BriefScreenProps) => {
           }}
           cardIndex={0}
           stackSeparation={0}
+          stackScale={0}
           stackSize={10}></Swiper>
       </View>
     </ScreenContainer>
