@@ -82,7 +82,7 @@ function CustomNavigation() {
 function App(): JSX.Element {
   return (
     <SafeAreaProvider>
-      <StatusBar backgroundColor={colors.palette.white} />
+      {/* <StatusBar backgroundColor={colors.palette.white} /> */}
       <SafeAreaView edges={['top']} style={styles.safeAreaContainer}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <BottomSheetModalProvider>

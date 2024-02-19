@@ -13,7 +13,6 @@ export default function ScreenContainer({
     style = {},
 }: ScreenContainerProps) {
     return <View style={[styles.screenWrapper, style]}>
-        <StatusBar backgroundColor={colors.palette.white} />
         {children}</View>;
 }
 
