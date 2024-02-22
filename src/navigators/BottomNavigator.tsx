@@ -7,7 +7,7 @@ import HomeIcon from '../assets/icons/HomeIcon';
 import MenuScreen from '../screens/MenuScreen';
 import MenuIcon from '../assets/icons/MenuIcon';
 import BriefIcon from '../assets/icons/BriefIcon';
-import BriefScreen from '../screens/BriefScreen';
+import BriefScreen from '../screens/Briefs/BriefDeckScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,6 +29,7 @@ export default function BottomNavigator({drawerNavigation}: any) {
           name={tab.name}
           component={tab.component}
           options={{
+            unmountOnBlur: true,
             tabBarIcon: ({color, size, focused}: any) => {
               return <tab.icon color={focused ? '#3C77F1' : '#1C1B1F'} />;
             },
