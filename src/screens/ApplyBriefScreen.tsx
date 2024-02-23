@@ -1,10 +1,11 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import ScreenContainer from './ScreenContainer';
 import GoBackIcon from '../assets/icons/GoBackIcon';
@@ -20,6 +21,8 @@ import CustomButton from '../components/Button';
 import RHFTextBox from '../forms/RHFTextBox';
 import {applyBriefAPI} from '../services/Brief';
 import {customNavigation} from '../../App';
+import DropDown from '../components/Dropdown';
+import {useSelector} from '../store';
 
 interface ApplyBriefScreenProps {
   route: {params?: {brief?: any}};
@@ -41,6 +44,14 @@ const briefSchema = Yup.object().shape({
 
 const ApplyBriefScreen = ({route}: ApplyBriefScreenProps) => {
   const brief = route?.params?.brief;
+  const [open, setOpen] = useState(false);
+  const [value] = useState(null);
+
+  const {user} = useSelector(state => state.user);
+  const [items] = useState(
+    // @ts-ignore
+    user?.showreel?.map((item: any) => ({label: item, value: item})) || [],
+  );
 
   const methods = useForm({
     resolver: yupResolver(briefSchema) as any,
@@ -49,7 +60,7 @@ const ApplyBriefScreen = ({route}: ApplyBriefScreenProps) => {
 
   const {
     handleSubmit,
-    setValue,
+    setValue: setFormValue,
     watch,
     control,
     formState: {errors},
@@ -75,10 +86,6 @@ const ApplyBriefScreen = ({route}: ApplyBriefScreenProps) => {
     name: 'media',
   });
 
-  React.useEffect(() => {
-    console.log(reelFields);
-  }, [reelFields]);
-
   const onSubmit = async (data: any) => {
     data = {
       briefId: brief?.id,
@@ -98,6 +105,10 @@ const ApplyBriefScreen = ({route}: ApplyBriefScreenProps) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    console.log(reelFields);
+  }, [reelFields]);
 
   return (
     <FormProvider methods={methods} style={styles.container}>
@@ -127,46 +138,59 @@ const ApplyBriefScreen = ({route}: ApplyBriefScreenProps) => {
           width={2 * Dimensions.get('screen').width}
           left={-50}
         />
-        <Text style={styles.title}>Add your work links</Text>
-        <Text
-          style={{
-            color: colors.palette.caption,
-            fontFamily: 'Poppins-Regular',
-            fontSize: 14,
-          }}>
-          Share your professional work with our Designer Curation Team by
-          providing up to five links to your social media profiles
-        </Text>
-        {reelFields.map((item, index) => {
-          return (
-            <RHFInput
-              placeholder="Showreel url"
-              key={index.toString()}
-              name={`reel.${index}`}
-            />
-          );
-        })}
-        <TouchableOpacity onPress={() => reelAppend('')}>
-          <Text style={styles.addMore}>+{'  '}Add Link</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>Social Media</Text>
-        {mediaFields.map((item, index) => {
-          return (
-            <RHFInput
-              placeholder="Showreel url"
-              key={index.toString()}
-              name={`media.${index}`}
-            />
-          );
-        })}
-        <TouchableOpacity onPress={() => mediaAppend('')}>
-          <Text style={styles.addMore}>+{'  '}Add Link</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>Add your treatment note</Text>
-        <RHFTextBox
-          name="note"
-          placeholder="Write how your gonna shoot the task. Fill in information like "
-        />
+        <ScrollView contentContainerStyle={{paddingBottom: 200}}>
+          <Text style={styles.title}>Add your work links</Text>
+          <Text
+            style={{
+              color: colors.palette.caption,
+              fontFamily: 'Poppins-Regular',
+              fontSize: 14,
+            }}>
+            Share your professional work with our Designer Curation Team by
+            providing up to five links to your social media profiles
+          </Text>
+          <DropDown
+            placeholder="Select your reel"
+            open={open}
+            value={value}
+            setValue={() => {}}
+            items={items}
+            setOpen={setOpen}
+            onSelectItem={(item: any) => {
+              reelAppend(item?.value);
+            }}
+          />
+          {reelFields.map((item, index) => {
+            return (
+              <RHFInput
+                placeholder="Showreel url"
+                key={index.toString()}
+                name={`reel.${index}`}
+              />
+            );
+          })}
+          <TouchableOpacity onPress={() => reelAppend('')}>
+            <Text style={styles.addMore}>+{'  '}Add Link</Text>
+          </TouchableOpacity>
+          <Text style={styles.title}>Social Media</Text>
+          {mediaFields.map((item, index) => {
+            return (
+              <RHFInput
+                placeholder="Showreel url"
+                key={index.toString()}
+                name={`media.${index}`}
+              />
+            );
+          })}
+          <TouchableOpacity onPress={() => mediaAppend('')}>
+            <Text style={styles.addMore}>+{'  '}Add Link</Text>
+          </TouchableOpacity>
+          <Text style={styles.title}>Add your treatment note</Text>
+          <RHFTextBox
+            name="note"
+            placeholder="Write how your gonna shoot the task. Fill in information like "
+          />
+        </ScrollView>
       </ScreenContainer>
       <CustomButton
         placeholder="Submit"

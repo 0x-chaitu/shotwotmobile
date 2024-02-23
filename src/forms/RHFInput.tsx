@@ -58,7 +58,7 @@ export default function RHFInput({
               {placeholder}
             </FormControl.Label>
             <Input
-              fontSize={16}
+              fontSize={14}
               backgroundColor={'white'}
               placeholderTextColor={colors.palette.gray500}
               borderColor={colors.palette.grey100}

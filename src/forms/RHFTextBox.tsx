@@ -58,7 +58,7 @@ export default function RHFTextBox({
               {name}
             </FormControl.Label>
             <TextArea
-              fontSize={16}
+              fontSize={14}
               backgroundColor={'white'}
               placeholderTextColor={colors.palette.gray500}
               borderColor={colors.palette.grey100}
