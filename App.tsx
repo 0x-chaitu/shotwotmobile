@@ -1,23 +1,29 @@
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { NavigationContainer, createNavigationContainerRef, DefaultTheme } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StyleSheet } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { Provider } from "react-redux";
-import { colors } from "./src/theme/colors";
-import { NativeBaseProvider, StatusBar } from "native-base";
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {
+  NavigationContainer,
+  createNavigationContainerRef,
+  DefaultTheme,
+} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Alert, StyleSheet} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import {Provider} from 'react-redux';
+import {colors} from './src/theme/colors';
+import {NativeBaseProvider, StatusBar} from 'native-base';
 import {
   LOCAL_STORAGE_KEYS,
   getItemFromAsyncStorage,
   setItemInAsyncStorage,
 } from './src/hooks/useStorage';
-import { useEffect } from "react";
-import { dispatch, store, useSelector } from "./src/store";
-import { getUserAPI } from "./src/services/Auth";
-import { handleUserLogin, resetState } from "./src/store/slice/userSlice";
-import AuthNavigator from "./src/navigators/AuthNavigator";
-import ScreensNavigator from "./src/navigators/ScreenNavigator";
+import {useEffect} from 'react';
+import {dispatch, store, useSelector} from './src/store';
+import {getUserAPI} from './src/services/Auth';
+import {handleUserLogin, resetState} from './src/store/slice/userSlice';
+import AuthNavigator from './src/navigators/AuthNavigator';
+import ScreensNavigator from './src/navigators/ScreenNavigator';
+import messaging from '@react-native-firebase/messaging';
+import NotificationController from './Notification';
 
 export const navigationRef = createNavigationContainerRef();
 const Stack = createNativeStackNavigator();
@@ -28,9 +34,8 @@ export function customNavigation(name: string, params?: object) {
   }
 }
 
-
 function CustomNavigation() {
-  const { user, isUserLoggedIn, userLoading } = useSelector(state => state.user);
+  const {user, isUserLoggedIn, userLoading} = useSelector(state => state.user);
   const accessToken = getItemFromAsyncStorage(LOCAL_STORAGE_KEYS.accessToken);
   const localUser = getItemFromAsyncStorage(LOCAL_STORAGE_KEYS.userId);
 
@@ -40,29 +45,32 @@ function CustomNavigation() {
       if (accessToken) {
         try {
           if (localUser) {
-            const res = await getUserAPI(localUser?.id)
+            const res = await getUserAPI(localUser?.id);
             if (res?.data) {
               console.log(res?.data);
               dispatch(handleUserLogin(res?.data));
             }
           }
         } catch (error) {
-
+          console.log(error);
         }
       } else {
-        dispatch(resetState())
+        dispatch(resetState());
       }
     } catch (error) {
       console.error('Error in checkAuth:', error);
     }
   };
 
-
-
   //Effects
   useEffect(() => {
     checkAuth();
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
     return () => {
+      unsubscribe;
     };
   }, []);
 
@@ -73,18 +81,19 @@ function CustomNavigation() {
   // }, [userLoading]);
 
   if (!isUserLoggedIn) {
-    return <AuthNavigator />
+    return <AuthNavigator />;
   } else {
-    return <ScreensNavigator />
+    return <ScreensNavigator />;
   }
 }
 
 function App(): JSX.Element {
   return (
     <SafeAreaProvider>
+      <NotificationController />
       {/* <StatusBar backgroundColor={colors.palette.white} /> */}
       <SafeAreaView edges={['top']} style={styles.safeAreaContainer}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
+        <GestureHandlerRootView style={{flex: 1}}>
           <BottomSheetModalProvider>
             <NativeBaseProvider>
               <Provider store={store}>
@@ -96,7 +105,6 @@ function App(): JSX.Element {
                     },
                   }}
                   ref={navigationRef}>
-
                   <CustomNavigation />
                 </NavigationContainer>
               </Provider>
@@ -105,7 +113,7 @@ function App(): JSX.Element {
         </GestureHandlerRootView>
       </SafeAreaView>
       <SafeAreaView edges={['bottom']} style={styles.bottomView} />
-    </SafeAreaProvider >
+    </SafeAreaProvider>
   );
 }
 

@@ -19,21 +19,61 @@ interface FetchHandlerProps {
 
 // Interceptor for axios response handling.
 axios.interceptors.response.use(
-  (response: AxiosResponse) => {
-    return response.data;
-  },
-  async (error: AxiosError<{code: number; message: string}>) => {
-    console.error('Response Error:', error.message);
-    if (error.response) {
-      console.error('Response Data:', error.response.data);
-    }
-    if (error.code === 'ERR_NETWORK') {
-      console.error('Network Error');
-      // Handle network error if needed
-    }
-    // Add other error handling logic as needed
-    throw error; // Re-throw error to propagate it further
-  },
+    (response: AxiosResponse) => {
+        return response.data;
+    },
+    async (
+        error: AxiosError<{
+            code: number;
+            message: string;
+        }>,
+    ) => {
+        console.log(error);
+        
+        if (error.code === 'ERR_NETWORK') {
+
+        }
+
+        if (error.response) {
+            const url = error.response.config.url;
+            if (error.response.data?.code && error.response.data?.code === 500) {
+                return;
+            }
+
+            // If we get 401 error in any api that means token is expired.
+            // So we make request to get access token.
+            if (
+                error.response.data?.code &&
+                error.response.data?.code === 401 &&
+                !url?.includes('/refresh-tokens')
+            ) {
+                // getAccessTokenAPI(
+                //     getItemFromAsyncStorage(LOCAL_STORAGE_KEYS.refreshToken),
+                // )
+                //     .then((res: any) => {
+                //         if (res) {
+                //             setItemInAsyncStorage(
+                //                 LOCAL_STORAGE_KEYS.accessToken,
+                //                 res.access.token,
+                //             );
+                //             setItemInAsyncStorage(
+                //                 LOCAL_STORAGE_KEYS.refreshToken,
+                //                 res.refresh.token,
+                //             );
+                //         } else {
+                //             // customNavigation(AUTH_SCREEN_NAMES.LOGIN);
+                //             emptyAsyncStorage();
+                //         }
+                //     })
+                //     .catch(() => {
+                //         // customNavigation(AUTH_SCREEN_NAMES.LOGIN);
+                //         emptyAsyncStorage();
+                //     });
+                emptyAsyncStorage();
+                return;
+            }
+        }
+    },
 );
 
 export default async function fetchHandler({
