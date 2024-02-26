@@ -10,12 +10,10 @@ export default function ProfileSetupComp() {
     <View
       style={{
         marginVertical: 6,
-        height: '17%',
-        // width:wp(90)
         backgroundColor: colors?.helpers?.GENTLE_BREEZE,
         borderRadius: 6,
         flexDirection: 'row',
-        // overflow: "hidden",
+        paddingVertical: 10,
       }}>
       <View
         style={{flex: 4.5, justifyContent: 'center', paddingHorizontal: 10}}>

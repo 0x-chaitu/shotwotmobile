@@ -4,6 +4,7 @@ import React, {FC} from 'react';
 import Constant from '../utils/Constant';
 import {colors} from '../theme/colors';
 import BellIcon from '../assets/icons/BellIcon';
+import {customStyles} from '../theme/style';
 
 type Props = {
   headerText?: string;
@@ -19,12 +20,7 @@ const Header: FC<Props> = ({headerText}) => {
         flexDirection: 'row',
       }}>
       <Text
-        style={{
-          fontFamily: 'Poppins',
-          fontSize: 20,
-          color: colors?.helpers?.BLUE_GRAY,
-          fontWeight: '600',
-        }}
+        style={[customStyles.semiBoldtitle, {fontSize: 20}]}
         numberOfLines={1}>
         {headerText || Constant.APP_NAME}
       </Text>

@@ -83,7 +83,7 @@ export default async function fetchHandler({
   header = {},
 }: FetchHandlerProps) {
   try {
-    const URL = `${API_CONFIG.bhavinLocalHost}/${url}`;
+    const URL = `${API_CONFIG.devEndPoint}/${url}`;
     console.log('API REQUEST TO -> ', URL);
     const headers = {
       Authorization: `Bearer ${getItemFromAsyncStorage(

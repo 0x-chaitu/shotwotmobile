@@ -4,18 +4,30 @@ import ScreenContainer from './ScreenContainer';
 import {colors} from '../theme/colors';
 import ProfileSetupComp from '../components/ProfileSetupComp';
 import Header from '../components/Header';
-import BriefsCarousel from '../components/BriefsCarousel';
+import Carousel from '../components/Carousel';
+import {ScrollView} from 'react-native';
+import {dispatch, useSelector} from '../store';
+import {fetchAppliedBriefs} from '../store/slice/briefSlice';
 
 interface HomeScreenProps {}
 
 const HomeScreen = (props: HomeScreenProps) => {
-  return (
-    <ScreenContainer style={{paddingTop: 10}}>
-      <Header />
-      <ProfileSetupComp />
+  const {briefs, isLoading} = useSelector(state => state?.brief);
 
-      <BriefsCarousel arrayData={[]} title="Your Briefs" onPress={() => {}} />
-    </ScreenContainer>
+  React.useEffect(() => {
+    dispatch(fetchAppliedBriefs());
+  }, []);
+
+  return (
+    <ScrollView
+      horizontal={false}
+      style={{backgroundColor: colors.palette.white}}>
+      <ScreenContainer style={{paddingTop: 10, gap: 5}}>
+        <Header />
+        <ProfileSetupComp />
+        <Carousel title="Your Briefs" onPress={() => {}} items={briefs} />
+      </ScreenContainer>
+    </ScrollView>
   );
 };
 

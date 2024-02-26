@@ -25,6 +25,7 @@ export type BriefTabsProps = {
   value?: string;
 };
 export type AllBriefProps = {
+  brief: any;
   id?: number;
   index?: number;
   title?: string;

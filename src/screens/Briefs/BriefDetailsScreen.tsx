@@ -28,9 +28,7 @@ const BriefDetailsScreen = ({route}: BriefDetailsProps) => {
   return (
     <ScrollView
       horizontal={false}
-      contentContainerStyle={{
-        backgroundColor: colors.palette.white,
-      }}>
+      style={{backgroundColor: colors.palette.white}}>
       <ScreenContainer style={{gap: -3}}>
         <ImageBackground
           style={styles.image}
@@ -47,7 +45,9 @@ const BriefDetailsScreen = ({route}: BriefDetailsProps) => {
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={styles.heading}>Duration</Text>
-            <Text style={styles.reward}>{CountDaysLeft(brief?.expiry)}</Text>
+            <Text style={styles.reward}>
+              {CountDaysLeft(brief?.expiry)}days
+            </Text>
           </View>
         </View>
         <Text style={styles.title}>Camera</Text>
@@ -57,55 +57,67 @@ const BriefDetailsScreen = ({route}: BriefDetailsProps) => {
           {brief?.camera?.Mobile ? <CircleTickIcon /> : <CircleCrossIcon />}
           <Text style={styles.heading}>Mobile</Text>
         </View>
-        <Text style={styles.title}>Tags</Text>
-        <Tags tags={brief?.tags} />
-        <Text style={styles.title}>Things worth shooting</Text>
-        {/* <ScrollView horizontal={false}> */}
-        <FlatList
-          data={brief?.images || []}
-          horizontal
-          renderItem={({item}) => {
-            return (
-              <Image
-                style={{
-                  height: 190,
-                  width: Dimensions.get('screen').width / 1.5,
-                  borderColor: '#d35647',
-                  borderRadius: 12,
-                  resizeMode: 'cover',
-                  margin: 8,
-                }}
-                source={{
-                  uri: `https://shotwot-test.b-cdn.net/${item}`,
-                }}
-              />
-            );
-          }}
-          keyExtractor={(item, index) => index.toString()}
-        />
-        {/* </ScrollView> */}
-        <Text style={styles.title}>Shotwot ideas</Text>
-        <FlatList
-          data={brief?.shotwotIdeas || []}
-          horizontal
-          renderItem={({item}) => {
-            return (
-              <View style={styles.ideaContainer}>
-                <Text style={[styles.title, {color: colors.palette.grey800}]}>
-                  {item?.title}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: 'Poppins-Regular',
-                    color: colors.palette.gray500,
-                  }}>
-                  {item?.description}
-                </Text>
-              </View>
-            );
-          }}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        {brief?.tags?.length > 0 ? (
+          <>
+            <Text style={styles.title}>Tags</Text>
+            <Tags tags={brief?.tags} />
+          </>
+        ) : null}
+        {brief?.images?.length > 0 ? (
+          <>
+            <Text style={styles.title}>Things worth shooting</Text>
+            <FlatList
+              data={brief?.images || []}
+              horizontal
+              renderItem={({item}) => {
+                return (
+                  <Image
+                    style={{
+                      height: 190,
+                      width: Dimensions.get('screen').width / 1.5,
+                      borderColor: '#d35647',
+                      borderRadius: 12,
+                      resizeMode: 'cover',
+                      margin: 8,
+                    }}
+                    source={{
+                      uri: `https://shotwot-test.b-cdn.net/${item}`,
+                    }}
+                  />
+                );
+              }}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </>
+        ) : null}
+        {brief?.shotwotIdeas?.length > 0 ? (
+          <>
+            <Text style={styles.title}>Shotwot ideas</Text>
+            <FlatList
+              data={brief?.shotwotIdeas || []}
+              horizontal
+              renderItem={({item}) => {
+                return (
+                  <View style={styles.ideaContainer}>
+                    <Text
+                      style={[styles.title, {color: colors.palette.grey800}]}>
+                      {item?.title}
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-Regular',
+                        color: colors.palette.gray500,
+                      }}>
+                      {item?.description}
+                    </Text>
+                  </View>
+                );
+              }}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </>
+        ) : null}
+
         <Text style={styles.title}>Requirements</Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View style={styles.requirementsContainer}>

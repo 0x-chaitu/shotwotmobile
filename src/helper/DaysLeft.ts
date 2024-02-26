@@ -11,5 +11,5 @@ export const CountDaysLeft = (time: any) => {
   var hours = Math.floor(delta / 3600) % 24;
     if (hours > 12) {days++}
 
-  return `${days}days`
+  return `${days}`
 }

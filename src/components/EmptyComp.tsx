@@ -11,11 +11,11 @@ const EmptyComp: FC<Props> = ({text}) => {
   return (
     <View
       style={{
-        // height: '28%',
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors?.helpers?.GENTLE_BREEZE,
+        borderRadius: 20,
       }}>
       <Text
         style={{

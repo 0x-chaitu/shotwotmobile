@@ -34,8 +34,8 @@ const Login = (props: LoginProps) => {
   const methods = useForm({
     resolver: yupResolver(signUpSchema) as any,
     defaultValues: {
-      email: 'bhavinpatil28@gmail.com',
-      password: 'Bhavin@28',
+      email: '',
+      password: '',
     },
   });
 

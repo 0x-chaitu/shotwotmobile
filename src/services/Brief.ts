@@ -7,6 +7,13 @@ export const getBriefsAPI = () => {
   });
 };
 
+export const getAppliedBriefsAPI = () => {
+  return fetchHandler({
+    method: 'get',
+    url: 'user/briefs/list/applied',
+  });
+};
+
 export const applyBriefAPI = (data: any) => {
   return fetchHandler({
     method: 'post',
