@@ -1,5 +1,23 @@
 const palette = {
-  background: '#ADADAD',
+  theme: "#7729E5",
+  background: "#FAF6FF",
+
+  theme6: 'rgba(119, 41, 229, 0.06)',
+
+  heading: "#16082B",
+  body: "#2D2140",
+  helper: "#736B80",
+  diabledCta: "#72839A",
+  placeholder: "#C2C3C7",
+
+  active: "#16082B",
+  inactive: "#8A8395",
+
+  divider: "#E8E5ED",
+  discountSucc: "#3B981A",
+  progress: "#FFA500",
+  failure: "#BC0C0C",
+
 
   black: '#000000',
   white: 'white',

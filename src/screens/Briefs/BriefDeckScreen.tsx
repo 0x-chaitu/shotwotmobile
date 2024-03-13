@@ -13,6 +13,7 @@ import FilterIcon from '../../assets/icons/FilterIcon';
 import Swiper from 'react-native-deck-swiper';
 import {getBriefsAPI} from '../../services/Brief';
 import DeckSwiper from '../../components/DeckSwiper';
+import {customStyles} from '../../theme/style';
 
 interface BriefScreenProps {}
 
@@ -50,7 +51,7 @@ const BriefScreen = (props: BriefScreenProps) => {
   }, [cardIndex]);
 
   return (
-    <ScreenContainer style={{paddingTop: 10}}>
+    <ScreenContainer style={{padding: 16}}>
       <View
         style={{
           flexDirection: 'row',
@@ -59,9 +60,8 @@ const BriefScreen = (props: BriefScreenProps) => {
         }}>
         <Text
           style={{
-            color: colors.palette.grey800,
-            fontFamily: 'Poppins-Medium',
-            fontSize: 22,
+            ...customStyles.heading5,
+            fontFamily: 'Lato-Bold',
           }}>
           Briefs
         </Text>

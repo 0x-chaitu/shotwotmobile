@@ -14,13 +14,13 @@ const Header: FC<Props> = ({headerText}) => {
   return (
     <View
       style={{
-        height: '8%',
+        padding: 8,
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
       }}>
       <Text
-        style={[customStyles.semiBoldtitle, {fontSize: 20}]}
+        style={[customStyles.heading5, {fontFamily: 'Lato-Bold'}]}
         numberOfLines={1}>
         {headerText || Constant.APP_NAME}
       </Text>

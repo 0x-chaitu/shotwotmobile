@@ -8,13 +8,34 @@ import MenuScreen from '../screens/MenuScreen';
 import MenuIcon from '../assets/icons/MenuIcon';
 import BriefIcon from '../assets/icons/BriefIcon';
 import BriefScreen from '../screens/Briefs/BriefDeckScreen';
+import ExploreIcon from '../assets/icons/ExploreIcon';
+import {colors} from '../theme/colors';
+import CustomText from '../components/CustomText';
+import InActiveExploreIcon from '../assets/icons/InAciveExploreIcon';
+import InActiveBriefIcon from '../assets/icons/InActiveBriefIcon';
+import InActiveMenuIcon from '../assets/icons/InActiveMenuIcon';
 
 const Tab = createBottomTabNavigator();
 
 const bottomTabs = [
-  {name: 'Home', component: HomeScreen, icon: HomeIcon},
-  {name: 'Brief', component: BriefScreen, icon: BriefIcon},
-  {name: 'Menu', component: MenuScreen, icon: MenuIcon},
+  {
+    name: 'Explore',
+    component: HomeScreen,
+    icon: ExploreIcon,
+    inactiveIcon: InActiveExploreIcon,
+  },
+  {
+    name: 'Brief',
+    component: BriefScreen,
+    icon: BriefIcon,
+    inactiveIcon: InActiveBriefIcon,
+  },
+  {
+    name: 'Menu',
+    component: MenuScreen,
+    icon: MenuIcon,
+    inactiveIcon: InActiveMenuIcon,
+  },
 ];
 
 export default function BottomNavigator({drawerNavigation}: any) {
@@ -23,6 +44,7 @@ export default function BottomNavigator({drawerNavigation}: any) {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {height: 71},
       }}>
       {bottomTabs.map((tab, i) => (
         <Tab.Screen
@@ -30,21 +52,30 @@ export default function BottomNavigator({drawerNavigation}: any) {
           component={tab.component}
           options={{
             unmountOnBlur: true,
-            tabBarIcon: ({color, size, focused}: any) => {
-              return <tab.icon color={focused ? '#3C77F1' : '#1C1B1F'} />;
-            },
+            tabBarIcon: ({color, size, focused}: any) =>
+              focused ? (
+                <tab.icon
+                  color={
+                    focused ? colors.palette.theme : colors.palette.heading
+                  }
+                />
+              ) : (
+                <tab.inactiveIcon />
+              ),
             tabBarLabel: ({focused}) => {
               return (
-                <Text
-                  style={{
-                    fontFamily: 'Poppins-Medium',
-                    fontSize: 10,
-                    color: focused ? '#3C77F1' : '#1C1B1F',
-                    marginTop: -5,
-                    marginBottom: 5,
+                <CustomText
+                  textStyle={{
+                    fontFamily: 'Lato-Regular',
+                    fontSize: 12,
+                    color: focused
+                      ? colors.palette.theme
+                      : colors.palette.heading,
+                    marginTop: -12,
+                    marginBottom: 12,
                   }}>
                   {tab.name}
-                </Text>
+                </CustomText>
               );
             },
           }}

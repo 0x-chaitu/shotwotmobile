@@ -1,8 +1,13 @@
 import React from 'react';
-import { SvgXml } from 'react-native-svg';
+import {SvgXml} from 'react-native-svg';
 
-const HomeIcon = ({ width = 24, height = 24, color = "#1C1B1F", ...props }: any) => {
-    const xml = `
+const HomeIcon = ({
+  width = 24,
+  height = 24,
+  color = '#1C1B1F',
+  ...props
+}: any) => {
+  const xml = `
     <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
     <mask id="mask0_712_3381" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="25" height="25">
     <rect x="0.5" y="0.5" width="24" height="24" fill="#D9D9D9"/>
@@ -14,7 +19,7 @@ const HomeIcon = ({ width = 24, height = 24, color = "#1C1B1F", ...props }: any)
     
 `;
 
-    return <SvgXml xml={xml} width={width} height={height} viewBox="0 0 24 24" />;
+  return <SvgXml xml={xml} width={width} height={height} viewBox="0 0 24 24" />;
 };
 
 export default HomeIcon;

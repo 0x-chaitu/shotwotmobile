@@ -9,14 +9,7 @@ type Props = {
 
 const EmptyComp: FC<Props> = ({text}) => {
   return (
-    <View
-      style={{
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors?.helpers?.GENTLE_BREEZE,
-        borderRadius: 20,
-      }}>
+    <View style={{}}>
       <Text
         style={{
           color: colors?.helpers?.BLUE_GRAY,
