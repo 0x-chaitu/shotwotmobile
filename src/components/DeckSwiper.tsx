@@ -136,10 +136,10 @@ const DeckSwiper = ({cards, getCards, cardIndex}: DeckSwiperProps) => {
       onSwipedRight={index => {
         customNavigation('BriefDetails', {brief: cards[index]});
       }}
-      stackSeparation={20}
+      // stackSeparation={20}
       // stackScale={0}
       // showSecondCard={false}
-      stackSize={3}
+      // stackSize={3}
       key={cards.length}
       overlayLabels={{
         bottom: {

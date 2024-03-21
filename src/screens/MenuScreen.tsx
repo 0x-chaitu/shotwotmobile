@@ -7,8 +7,14 @@ import {colors} from '../theme/colors';
 import InputField from '../components/InputField';
 import GoBackIcon from '../assets/icons/GoBackIcon';
 import {customNavigation} from '../../App';
-import {useSelector} from '../store';
+import {dispatch, useSelector} from '../store';
 import TextAreaField from '../components/TextAreaField';
+import TouchableButton from '../components/TouchableButton';
+import {resetState} from '../store/slice/userSlice';
+import {
+  LOCAL_STORAGE_KEYS,
+  removeItemFromAsyncStorage,
+} from '../hooks/useStorage';
 
 interface MenuScreenProps {}
 
@@ -62,6 +68,18 @@ const MenuScreen = (props: MenuScreenProps) => {
       </View>
       <InputField placeholder="username" value={user?.username} />
       <TextAreaField placeholder="Bio" />
+      <TouchableButton
+        placeHolder={'Sign Out'}
+        style={{
+          padding: 12,
+          backgroundColor: colors.palette.theme,
+        }}
+        onPress={() => {
+          dispatch(resetState());
+          removeItemFromAsyncStorage(LOCAL_STORAGE_KEYS.accessToken);
+          removeItemFromAsyncStorage(LOCAL_STORAGE_KEYS.userId);
+        }}
+      />
     </ScreenContainer>
   );
 };

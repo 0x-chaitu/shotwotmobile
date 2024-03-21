@@ -16,6 +16,8 @@ import {
 } from 'native-base';
 import {colors} from '../theme/colors';
 import {StyleSheet} from 'react-native';
+import CustomText from '../components/CustomText';
+import {customStyles} from '../theme/style';
 
 type Props = IInputProps & {
   placeholder: string;
@@ -47,23 +49,30 @@ export default function RHFInput({
           <FormControl
             isInvalid={error != null}
             isRequired={rules != null && 'required' in rules}>
-            <FormControl.Label
-              style={{
-                marginBottom: -10,
-                marginLeft: 10,
-                zIndex: 10,
-                backgroundColor: colors.palette.white,
-                alignSelf: 'flex-start',
-              }}>
-              {placeholder}
+            <FormControl.Label>
+              <CustomText textStyle={styles.label}>{label}</CustomText>
             </FormControl.Label>
             <Input
               fontSize={14}
               backgroundColor={'white'}
-              placeholderTextColor={colors.palette.gray500}
-              borderColor={colors.palette.grey100}
-              fontFamily={'Poppins-Regular'}
+              placeholderTextColor={'#BEBBC2'}
+              borderColor={colors.palette.outline}
+              fontFamily={'Lato-Regular'}
               _focus={styles.focus}
+              _invalid={{
+                borderColor: '#E50000',
+              }}
+              InputRightElement={
+                <>
+                  {error != null ? (
+                    <WarningOutlineIcon
+                      size="xs"
+                      color={'#E50000'}
+                      paddingRight={12}
+                    />
+                  ) : null}
+                </>
+              }
               onChangeText={field.onChange}
               defaultValue=""
               {...other}
@@ -74,18 +83,15 @@ export default function RHFInput({
               }}
               placeholder={placeholder}
               // @ts-ignore
-              _pressed={{
-                opacity: 80,
-              }}
               margin={0}
               {...other}
             />
-            <FormControl.ErrorMessage
-              leftIcon={<WarningOutlineIcon size="xs" />}>
+            <FormControl.ErrorMessage>
               {error != null && (
-                <FormControl.ErrorMessage>
+                <CustomText
+                  textStyle={{...customStyles.bodyLabel, color: '#E50000'}}>
                   {error.message}
-                </FormControl.ErrorMessage>
+                </CustomText>
               )}
             </FormControl.ErrorMessage>
           </FormControl>
@@ -101,15 +107,15 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   focus: {
-    fontFamily: 'Poppins-Regular',
-    color: colors.palette.black,
-    borderColor: colors.palette.grey100,
-    margin: 0,
+    fontFamily: 'Lato-Regular',
+    color: colors.palette.body,
+    borderColor: colors.palette.heading,
+    fontSize: 14,
   },
   label: {
-    fontFamily: 'Poppins-Medium',
-    color: colors.palette.black,
+    fontFamily: 'Lato-Regular',
+    fontSize: 13,
+    color: '#695A7E',
     fontWeight: '600',
-    fontSize: 18,
   },
 });

@@ -18,6 +18,7 @@ interface ButtonProps {
   isLoading: boolean;
   placeHolder?: String;
   textStyle?: TextStyle;
+  icon?: React.ReactNode;
 }
 
 const TouchableButton = ({
@@ -26,12 +27,14 @@ const TouchableButton = ({
   placeHolder,
   style,
   textStyle,
+  icon = null,
 }: ButtonProps) => {
   return (
     <TouchableOpacity
       style={[{...styles.container, ...style}]}
       onPress={onPress}
       disabled={isLoading}>
+      {icon}
       <CustomText textStyle={textStyle}>{placeHolder}</CustomText>
     </TouchableOpacity>
   );
@@ -47,6 +50,7 @@ const styles = StyleSheet.create({
     padding: 6,
     borderRadius: 2,
     gap: 4,
+    flexDirection: 'row',
   },
   buttonTitle: {
     fontSize: 12,

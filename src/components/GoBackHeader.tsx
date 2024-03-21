@@ -35,8 +35,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
-    marginTop: -10,
+    gap: 16,
   },
   header: {
     color: colors.palette.grey800,

@@ -29,7 +29,9 @@ export const customStyles = StyleSheet.create({
     fontSize: 18
   },heading7: {
     color: colors.palette.heading,
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: 'Lato-Bold',
+
   },
   heading8: {
     fontFamily: 'Lato-Bold',

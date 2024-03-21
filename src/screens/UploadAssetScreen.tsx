@@ -87,27 +87,25 @@ const UploadAssetScreen = ({route}: UploadAssetScreenProps) => {
   };
 
   const submit = async () => {
-    let files: any = [];
     for (let i of assets) {
-      files.push({name: i.fileName, type: i.type});
-    }
-    try {
-      const res = await createAssetsAPI({
-        files,
-        briefId: brief?.id,
-      });
-      if (res?.data?.urls) {
-        for (let i in res?.data?.urls) {
-          try {
-            const fileRes = await api(assets[i], res?.data?.urls[i]);
-            console.log(fileRes);
-          } catch (error) {
-            console.log(error);
+      try {
+        const res = await createAssetsAPI({
+          file: {name: i.fileName, type: i.type},
+          briefId: brief?.id,
+        });
+        if (res?.data?.urls) {
+          for (let i in res?.data?.urls) {
+            try {
+              const fileRes = await api(assets[i], res?.data?.urls[i]);
+              console.log(fileRes);
+            } catch (error) {
+              console.log(error);
+            }
           }
         }
+      } catch (error) {
+        setError(true);
       }
-    } catch (error) {
-      setError(true);
     }
   };
 

@@ -10,6 +10,8 @@ const palette = {
   diabledCta: "#72839A",
   placeholder: "#C2C3C7",
 
+  outline: '#E8E6E6',
+
   active: "#16082B",
   inactive: "#8A8395",
 
